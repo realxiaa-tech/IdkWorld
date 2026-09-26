@@ -3,107 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>System Terminal</title>
+    <title>A Note for You</title>
     <style>
-        body {
-            background-color: #0b0b0b;
-            color: #00ff66;
-            font-family: 'Courier New', Courier, monospace;
-            padding: 20px;
+        * {
+            box-sizing: border-box;
             margin: 0;
-            overflow: hidden;
+            padding: 0;
         }
-        #terminal {
-            white-space: pre-wrap;
-            word-wrap: break-word;
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f7f9fa;
+            color: #333333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .card {
+            background: #ffffff;
+            max-width: 500px;
+            width: 100%;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e1e8ed;
+        }
+
+        .header {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        .content {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #4a5568;
+            margin-bottom: 20px;
+        }
+
+        .content p {
+            margin-bottom: 14px;
+        }
+
+        .signoff {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #2c3e50;
+            margin-top: 30px;
+        }
+
+        .heart {
+            color: #e53e3e;
             font-size: 1.1rem;
-            line-height: 1.5;
-        }
-        .cursor {
-            display: inline-block;
-            background-color: #00ff66;
-            width: 10px;
-            height: 1.2rem;
-            animation: blink 0.8s infinite;
-            vertical-align: bottom;
-            margin-left: 2px;
-        }
-        @keyframes blink {
-            0%, 50% { opacity: 1; }
-            51%, 100% { opacity: 0; }
-        }
-        .warning {
-            color: #ff3333;
-            font-weight: bold;
-        }
-        .banner {
-            margin-top: 20px;
-            padding: 15px;
-            border: 2px dashed #00ff66;
-            display: inline-block;
-            background: rgba(0, 255, 102, 0.05);
         }
     </style>
 </head>
 <body>
 
-    <div id="terminal"></div><span class="cursor" id="cursor"></span>
-
-    <script>
-        const terminal = document.getElementById("terminal");
-        const cursor = document.getElementById("cursor");
-
-        const lines = [
-            { text: "Initializing secure protocol...", delay: 600 },
-            { text: "Downloading mainframe data...", progress: true, delay: 40 },
-            { text: "\n[WARNING] Unauthorized access detected from IP: 192.168.1.42", class: "warning", delay: 800 },
-            { text: "[INFO] Uploading personal browser history to public cloud...", delay: 1200 },
-            { text: "[CRITICAL] Deleting System32... Just kidding! 😄", class: "warning", delay: 1000 },
-            { text: "\n========================================", delay: 200 },
-            { text: "  GOTCHA! Have a wonderful day! 🚀", banner: true, delay: 0 }
-        ];
-
-        async function typeText(text, className = "") {
-            let span = document.createElement("span");
-            if (className) span.className = className;
-            terminal.appendChild(span);
+    <div class="card">
+        <div class="header">Hey there,</div>
+        
+        <div class="content">
+            <p>I was just thinking about you today and realized how much better things are when you're around.</p>
             
-            for (let char of text) {
-                span.textContent += char;
-                await new Promise(resolve => setTimeout(resolve, 15));
-            }
-            terminal.appendChild(document.createElement("br"));
-        }
+            <p>You have this quiet way of making ordinary days feel a little special, whether it's through your quick laugh, your bad jokes, or just the comfortable silence we share.</p>
+            
+            <p>I don't say it enough, but I really appreciate having you in my life. Thanks for being you.</p>
+        </div>
 
-        async function runProgressBar() {
-            let span = document.createElement("span");
-            terminal.appendChild(span);
+        <div class="signoff">
+            Warmly, <span class="heart">&hearts;</span><br>
+            [Your Name]
+        </div>
+    </div>
 
-            for (let i = 0; i <= 100; i++) {
-                let bar = "#".repeat(Math.floor(i / 2)) + "-".repeat(50 - Math.floor(i / 2));
-                span.textContent = `[${bar}] ${i}%\r`;
-                await new Promise(resolve => setTimeout(resolve, 25));
-            }
-            terminal.appendChild(document.createElement("br"));
-            terminal.appendChild(document.createElement("br"));
-        }
-
-        async function startPrank() {
-            for (let line of lines) {
-                await new Promise(resolve => setTimeout(resolve, line.delay));
-                if (line.progress) {
-                    await typeText(line.text);
-                    await runProgressBar();
-                } else {
-                    await typeText(line.text, line.class);
-                }
-            }
-            // Hide cursor at the end
-            cursor.style.display = 'none';
-        }
-
-        // Start automatically after 1 second
-        setTimeout(startPrank, 1000);
-    </script>
 </body>
 </html>
